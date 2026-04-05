@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Highstudio Services — Gestão de E-commerce & Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+  :root {
+    --black: #080808;
+    --dark1: #111111;
+    --dark2: #1a1a1a;
+    --dark3: #222222;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.15);
+    --muted: #888888;
+    --light: #cccccc;
+    --white: #f5f5f5;
+    --pure: #ffffff;
+  }
+ 
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+ 
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.5;
+  }
+ 
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 0 60px; height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(8,8,8,0.95); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo-icon { width: 38px; height: 38px; border: 1.5px solid rgba(255,255,255,0.55); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logo-icon svg { width: 22px; height: 22px; }
+  .logo-text { display: flex; flex-direction: column; line-height: 1; }
+  .logo-text .name { font-size: 16px; font-weight: 700; color: var(--pure); }
+  .logo-text .sub  { font-size: 9px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--pure); }
+  .nav-cta { background: var(--pure); color: var(--black); padding: 9px 22px; border-radius: 6px; font-size: 13px; font-weight: 700; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: #ddd; }
+ 
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 130px 60px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+  .hero-content { position: relative; z-index: 1; }
+ 
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border2); border-radius: 100px;
+    padding: 6px 14px; font-size: 11px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase; color: var(--light);
+    margin-bottom: 36px; animation: fadeUp 0.5s ease both;
+  }
+  .dot { width: 6px; height: 6px; background: var(--pure); border-radius: 50%; animation: blink 2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+ 
+  .hero h1 {
+    font-size: clamp(52px, 8vw, 110px);
+    font-weight: 900; line-height: 0.92; letter-spacing: -4px;
+    color: var(--pure); max-width: 860px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 em { font-style: normal; color: var(--muted); }
+ 
+  .hero-desc {
+    font-size: 17px; color: var(--muted); max-width: 480px;
+    line-height: 1.75; margin-top: 28px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-btns { display: flex; gap: 14px; margin-top: 44px; animation: fadeUp 0.6s 0.3s ease both; }
+ 
+  .btn-w { background: var(--pure); color: var(--black); padding: 14px 32px; border-radius: 6px; font-size: 14px; font-weight: 700; text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-w:hover { background: #ddd; transform: translateY(-1px); }
+  .btn-o { background: transparent; color: var(--light); padding: 14px 32px; border-radius: 6px; border: 1px solid var(--border2); font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+  .btn-o:hover { border-color: rgba(255,255,255,0.4); color: var(--pure); }
+ 
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    margin-top: 80px; animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .hstat { padding: 32px 32px 0 0; border-right: 1px solid var(--border); }
+  .hstat:last-child { border-right: none; }
+  .hstat:not(:first-child) { padding-left: 32px; }
+  .hstat-n { font-size: 44px; font-weight: 900; letter-spacing: -2px; color: var(--pure); line-height: 1; }
+  .hstat-l { font-size: 12px; font-weight: 500; color: var(--muted); margin-top: 6px; }
+ 
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+ 
+  /* MARQUEE */
+  .marquee-wrap { overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 12px 0; background: var(--dark1); }
+  .marquee-track { display: flex; white-space: nowrap; animation: marquee 28s linear infinite; }
+  .marquee-item { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); padding: 0 28px; display: inline-flex; align-items: center; gap: 20px; }
+  .marquee-item::after { content: '—'; opacity: 0.3; }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+ 
+  /* SECTIONS */
+  section { padding: 100px 60px; position: relative; }
+  .sec-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .sec-label::before { content:''; width:20px; height:1px; background: var(--muted); }
+  .sec-title { font-size: clamp(36px, 4.5vw, 56px); font-weight: 900; letter-spacing: -2px; line-height: 1.05; color: var(--pure); max-width: 640px; }
+ 
+  /* ===== SERVICE CARDS ===== */
+  .services { background: var(--black); }
+ 
+  .svc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin-top: 56px;
+  }
+ 
+  /* Card grande (ocupa 2 colunas) */
+  .svc-card {
+    background: var(--dark1);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    display: flex; flex-direction: column;
+  }
+  .svc-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  }
+  .svc-card:hover { border-color: var(--border2); transform: translateY(-4px); }
+  .svc-card.wide { grid-column: span 2; }
+  .svc-card.featured { background: var(--dark2); border-color: rgba(255,255,255,0.16); }
+ 
+  .svc-icon {
+    width: 52px; height: 52px;
+    background: var(--dark3); border: 1px solid var(--border2);
+    border-radius: 13px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; margin-bottom: 24px;
+  }
+ 
+  .svc-badge {
+    display: inline-block; margin-bottom: 14px;
+    font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--pure); background: rgba(255,255,255,0.07);
+    border: 1px solid var(--border2); padding: 4px 12px; border-radius: 100px;
+    width: fit-content;
+  }
+ 
+  .svc-card h3 {
+    font-size: 20px; font-weight: 800; color: var(--pure);
+    margin-bottom: 10px; letter-spacing: -0.4px; line-height: 1.2;
+  }
+  .svc-card .svc-desc {
+    font-size: 13.5px; color: var(--muted); line-height: 1.65;
+    margin-bottom: 24px;
+  }
+ 
+  .svc-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+  .svc-list li {
+    display: flex; align-items: center; gap: 11px;
+    font-size: 13.5px; color: var(--light); font-weight: 400;
+  }
+  .svc-list li .ck {
+    width: 20px; height: 20px; flex-shrink: 0;
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border2);
+    border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: var(--pure);
+  }
+ 
+  .svc-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 28px; padding: 11px 22px;
+    background: transparent; border: 1px solid var(--border2);
+    border-radius: 8px; color: var(--light);
+    font-size: 13px; font-weight: 600; text-decoration: none;
+    transition: all 0.2s; width: fit-content;
+  }
+  .svc-cta:hover { background: rgba(255,255,255,0.05); color: var(--pure); border-color: rgba(255,255,255,0.3); }
+ 
+  /* ===== HOW ===== */
+  .how { background: var(--dark1); }
+  .how-grid { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 56px; }
+  .how-step { padding: 40px 32px; border-right: 1px solid var(--border); }
+  .how-step:last-child { border-right: none; }
+  .how-num { font-size: 52px; font-weight: 900; color: rgba(255,255,255,0.04); letter-spacing: -2px; line-height: 1; margin-bottom: 20px; }
+  .how-step h4 { font-size: 16px; font-weight: 700; color: var(--pure); margin-bottom: 10px; }
+  .how-step p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+ 
+  /* ===== CTA ===== */
+  .cta-sec { background: var(--black); text-align: center; border-top: 1px solid var(--border); }
+  .cta-sec h2 { font-size: clamp(48px, 7vw, 88px); font-weight: 900; letter-spacing: -3px; line-height: 0.95; color: var(--pure); }
+  .cta-sec h2 em { font-style: normal; color: var(--muted); }
+  .cta-sec p { font-size: 16px; color: var(--muted); margin: 20px auto 44px; max-width: 420px; line-height: 1.7; }
+  .cta-contacts {
+    display: flex; gap: 40px; justify-content: center;
+    margin-top: 56px; flex-wrap: wrap;
+    padding-top: 40px; border-top: 1px solid var(--border);
+  }
+  .cta-c { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .cta-c .cl { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .cta-c .cv { font-size: 15px; font-weight: 600; color: var(--pure); }
+ 
+  footer {
+    padding: 32px 60px; display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--border); background: var(--black);
+  }
+  footer p { font-size: 12px; color: #444; }
+ 
+  .reveal { opacity:0; transform:translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+ 
+  @media(max-width:960px){
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    section { padding: 70px 20px; }
+    .hero { padding: 110px 20px 60px; }
+    .hero-stats { grid-template-columns: repeat(2,1fr); }
+    .svc-grid { grid-template-columns: 1fr; }
+    .svc-card.wide { grid-column: span 1; }
+    .how-grid { grid-template-columns: 1fr 1fr; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+ 
+<!-- NAV -->
+<nav>
+  <a class="logo-wrap" href="#">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M4 4H10V20H4V4Z" fill="white" opacity="0.9"/>
+        <path d="M14 4H20V20H14V4Z" fill="white" opacity="0.9"/>
+        <path d="M10 11H14V13H10V11Z" fill="white"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <span class="name">highstudio</span>
+      <span class="sub">Services</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#como-funciona">Como Funciona</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="https://wa.me/5511942006066" target="_blank" class="nav-cta">Falar Agora</a>
+</nav>
+ 
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="eyebrow">
+      <div class="dot"></div>
+      Especialistas em e-commerce & marketplace
+    </div>
+    <h1>SUA LOJA<br><em>NO PRÓXIMO</em><br>NÍVEL.</h1>
+    <p class="hero-desc">
+      Gestão completa de Mercado Livre, Shopee, tráfego pago e criação de lojas próprias.
+      Cuidamos de tudo para você focar no que importa: vender e crescer.
+    </p>
+    <div class="hero-btns">
+      <a href="#servicos" class="btn-w">Ver Serviços →</a>
+      <a href="https://wa.me/5511942006066" target="_blank" class="btn-o">Falar com a gente</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-n">150+</div><div class="hstat-l">Clientes atendidos</div></div>
+      <div class="hstat"><div class="hstat-n">R$2M+</div><div class="hstat-l">Em vendas gerenciadas</div></div>
+      <div class="hstat"><div class="hstat-n">6</div><div class="hstat-l">Soluções completas</div></div>
+      <div class="hstat"><div class="hstat-n">98%</div><div class="hstat-l">Taxa de satisfação</div></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Meta Ads</span>
+    <span class="marquee-item">Mercado Livre</span>
+    <span class="marquee-item">Shopee Ads</span>
+    <span class="marquee-item">Site E-commerce</span>
+    <span class="marquee-item">Assessoria</span>
+    <span class="marquee-item">Diagnóstico de Loja</span>
+    <span class="marquee-item">Tráfego Pago</span>
+    <span class="marquee-item">Otimização</span>
+    <span class="marquee-item">Meta Ads</span>
+    <span class="marquee-item">Mercado Livre</span>
+    <span class="marquee-item">Shopee Ads</span>
+    <span class="marquee-item">Site E-commerce</span>
+    <span class="marquee-item">Assessoria</span>
+    <span class="marquee-item">Diagnóstico de Loja</span>
+    <span class="marquee-item">Tráfego Pago</span>
+    <span class="marquee-item">Otimização</span>
+  </div>
+</div>
+ 
+<!-- SERVICES -->
+<section class="services" id="servicos">
+  <div class="sec-label">Nossos serviços</div>
+  <h2 class="sec-title">Tudo que seu negócio precisa para crescer</h2>
+ 
+  <div class="svc-grid reveal">
+ 
+    <!-- META ADS -->
+    <div class="svc-card">
+      <div class="svc-icon">🎯</div>
+      <h3>Gestão de Tráfego Meta</h3>
+      <p class="svc-desc">Campanhas estratégicas no Meta Ads para gerar vendas reais com o menor custo por aquisição possível.</p>
+      <ul class="svc-list">
+        <li><span class="ck">✓</span>Criação e gestão de campanhas</li>
+        <li><span class="ck">✓</span>Segmentação estratégica de público</li>
+        <li><span class="ck">✓</span>Criativos otimizados para conversão</li>
+        <li><span class="ck">✓</span>Relatórios de performance</li>
+        <li><span class="ck">✓</span>Otimização contínua de ROI</li>
+      </ul>
+      <a href="https://wa.me/5511942006066" target="_blank" class="svc-cta">Saber mais →</a>
+    </div>
+ 
+    <!-- MERCADO LIVRE -->
+    <div class="svc-card">
+      <div class="svc-icon">🏪</div>
+      <h3>Gestão Mercado Livre</h3>
+      <p class="svc-desc">Gestão completa da sua loja no maior marketplace do Brasil, do cadastro à publicidade.</p>
+      <ul class="svc-list">
+        <li><span class="ck">✓</span>Gestão completa da loja</li>
+        <li><span class="ck">✓</span>Cadastro e otimização de produtos</li>
+        <li><span class="ck">✓</span>Atendimento ao cliente</li>
+        <li><span class="ck">✓</span>Publicidade (Mercado Ads)</li>
+        <li><span class="ck">✓</span>Reputação e otimização</li>
+      </ul>
+      <a href="https://wa.me/5511942006066" target="_blank" class="svc-cta">Saber mais →</a>
+    </div>
+ 
+    <!-- SHOPEE -->
+    <div class="svc-card">
+      <div class="svc-icon">🛒</div>
+      <h3>Gestão Shopee Ads</h3>
+      <p class="svc-desc">Presença forte na Shopee com gestão profissional de anúncios, loja e atendimento ao cliente.</p>
+      <ul class="svc-list">
+        <li><span class="ck">✓</span>Cadastro de produtos completo</li>
+        <li><span class="ck">✓</span>Atendimento ao cliente</li>
+        <li><span class="ck">✓</span>Otimização de anúncios e loja</li>
+        <li><span class="ck">✓</span>Gestão de Shopee Ads</li>
+        <li><span class="ck">✓</span>Estratégia de preços e promoções</li>
+      </ul>
+      <a href="https://wa.me/5511942006066" target="_blank" class="svc-cta">Saber mais →</a>
+    </div>
+ 
+    <!-- SITE ECOMMERCE -->
+    <div class="svc-card">
+      <div class="svc-icon">🌐</div>
+      <div class="svc-badge">✦ Sem custos adicionais</div>
+      <h3>Site E-commerce Completo</h3>
+      <p class="svc-desc">Sua loja própria 100% pronta e funcionando, com checkout, domínio e automações já configurados na entrega.</p>
+      <ul class="svc-list">
+        <li><span class="ck">✓</span>Loja rodando 100% na entrega</li>
+        <li><span class="ck">✓</span>Checkout integrado e configurado</li>
+        <li><span class="ck">✓</span>Domínio e hospedagem inclusos</li>
+        <li><span class="ck">✓</span>WhatsApp e automações básicas</li>
+        <li><span class="ck">✓</span>Manutenção mensal disponível</li>
+      </ul>
+      <a href="https://wa.me/5511942006066" target="_blank" class="svc-cta">Saber mais →</a>
+    </div>
+ 
+    <!-- ASSESSORIA — wide -->
+    <div class="svc-card wide featured">
+      <div class="svc-icon">🏬</div>
+      <div class="svc-badge">✦ Para lojistas físicos</div>
+      <h3>Assessoria para Lojistas que Ainda Não Vendem Online</h3>
+      <p class="svc-desc">Você tem uma loja física mas ainda não vende na internet? A gente cuida de tudo: do zero ao primeiro pedido no Mercado Livre e na Shopee. Sem complicação, sem precisar entender de tecnologia.</p>
+      <ul class="svc-list" style="display:grid; grid-template-columns:1fr 1fr; gap:10px 32px;">
+        <li><span class="ck">✓</span>Abertura e configuração de conta</li>
+        <li><span class="ck">✓</span>Cadastro completo dos produtos</li>
+        <li><span class="ck">✓</span>Fotos, títulos e descrições otimizadas</li>
+        <li><span class="ck">✓</span>Estratégia de preço e frete</li>
+        <li><span class="ck">✓</span>Primeiras vendas e reputação</li>
+        <li><span class="ck">✓</span>Suporte e treinamento contínuo</li>
+      </ul>
+      <a href="https://wa.me/5511942006066" target="_blank" class="svc-cta">Quero vender online →</a>
+    </div>
+ 
+    <!-- DIAGNÓSTICO -->
+    <div class="svc-card">
+      <div class="svc-icon">🔍</div>
+      <div class="svc-badge">✦ Análise completa</div>
+      <h3>Diagnóstico de Loja</h3>
+      <p class="svc-desc">Análise profunda da sua loja atual com um plano de ação claro para destravar suas vendas e corrigir o que está freando seu crescimento.</p>
+      <ul class="svc-list">
+        <li><span class="ck">✓</span>Auditoria de anúncios e loja</li>
+        <li><span class="ck">✓</span>Análise de concorrência</li>
+        <li><span class="ck">✓</span>Identificação de gargalos</li>
+        <li><span class="ck">✓</span>Plano de ação detalhado</li>
+        <li><span class="ck">✓</span>Sessão de apresentação dos resultados</li>
+      </ul>
+      <a href="https://wa.me/5511942006066" target="_blank" class="svc-cta">Saber mais →</a>
+    </div>
+ 
+  </div>
+</section>
+ 
+<!-- HOW -->
+<section class="how" id="como-funciona">
+  <div class="sec-label">Como funciona</div>
+  <h2 class="sec-title">Do zero ao crescimento em 4 etapas</h2>
+  <div class="how-grid reveal">
+    <div class="how-step">
+      <div class="how-num">01</div>
+      <h4>Diagnóstico</h4>
+      <p>Analisamos seu negócio, concorrentes e oportunidades para saber onde você está e onde pode chegar.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-num">02</div>
+      <h4>Estratégia</h4>
+      <p>Montamos um plano personalizado com os canais certos e metas claras para seus objetivos.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-num">03</div>
+      <h4>Execução</h4>
+      <p>Implementamos tudo: setup, anúncios, gestão de pedidos, automações e monitoramento constante.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-num">04</div>
+      <h4>Escala</h4>
+      <p>Com os resultados chegando, escalamos o que funciona e garantimos crescimento consistente.</p>
+    </div>
+  </div>
+</section>
+ 
+<!-- CTA -->
+<section class="cta-sec" id="contato">
+  <div class="sec-label" style="justify-content:center;">Vamos começar</div>
+  <h2>PRONTO PARA<br><em>ESCALAR?</em></h2>
+  <p>Fale com a gente hoje e descubra como a Highstudio pode transformar seu negócio digital.</p>
+  <a href="https://wa.me/5511942006066" target="_blank" class="btn-w" style="display:inline-flex;font-size:15px;padding:16px 36px;">
+    💬 Falar no WhatsApp
+  </a>
+  <div class="cta-contacts">
+    <div class="cta-c">
+      <span class="cl">WhatsApp</span>
+      <span class="cv">(11) 94200-6066</span>
+    </div>
+    <div class="cta-c">
+      <span class="cl">E-mail</span>
+      <span class="cv">highstudioservices@gmail.com</span>
+    </div>
+    <div class="cta-c">
+      <span class="cl">Resposta em</span>
+      <span class="cv">menos de 2 horas</span>
+    </div>
+  </div>
+</section>
+ 
+<!-- FOOTER -->
+<footer>
+  <a class="logo-wrap" href="#">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M4 4H10V20H4V4Z" fill="white" opacity="0.9"/>
+        <path d="M14 4H20V20H14V4Z" fill="white" opacity="0.9"/>
+        <path d="M10 11H14V13H10V11Z" fill="white"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <span class="name">highstudio</span>
+      <span class="sub">Services</span>
+    </div>
+  </a>
+  <p>© 2025 Highstudio Services. Todos os direitos reservados.</p>
+</footer>
+ 
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
+ 
